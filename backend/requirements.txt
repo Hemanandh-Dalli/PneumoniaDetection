@@ -1,0 +1,41 @@
+# ===============================
+# Core Backend (FastAPI)
+# ===============================
+fastapi==0.110.0
+uvicorn[standard]==0.27.1
+python-multipart==0.0.9
+pydantic>=2.9.0,<3.0.0
+
+# ===============================
+# Authentication & Security
+# ===============================
+python-jose==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+
+# ===============================
+# Database (MySQL)
+# ===============================
+sqlalchemy==2.0.25
+pymysql==1.1.0
+
+# ===============================
+# Machine Learning & Image Processing
+# ===============================
+tensorflow==2.17.1
+keras==3.4.1
+numpy==1.26.4
+pillow==10.2.0
+opencv-python==4.9.0.80
+
+# ===============================
+# Google Gemini API
+# ===============================
+google-genai==1.60.0
+
+# ===============================
+# Utilities
+# ===============================
+python-dotenv==1.0.1
+requests==2.31.0
+reportlab==4.1.0
