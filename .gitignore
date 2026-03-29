@@ -21,3 +21,4 @@ backend/reports/
 # frontend build
 frontend/dist/
 backend/model/*.keras
+lung.mp4
