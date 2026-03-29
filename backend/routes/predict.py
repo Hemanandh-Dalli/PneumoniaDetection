@@ -62,7 +62,7 @@ async def predict_image(
         explanation = explain_prediction(
             predicted_class,
             confidence,
-            max_lines=5,
+            max_lines=8,
         )
 
         # -------------------------

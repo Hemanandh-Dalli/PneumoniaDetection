@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+﻿import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Upload from "./pages/Upload";
 import Result from "./pages/Result";
@@ -13,48 +13,57 @@ const PrivateRoute = ({ children }) => {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+    <div className="app-shell">
+      <video className="app-bg-video" autoPlay loop muted playsInline>
+        <source src="/lung.mp4" type="video/mp4" />
+      </video>
+      <div className="app-bg-overlay" />
 
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Upload />
-            </PrivateRoute>
-          }
-        />
+      <div className="app-content">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Upload />
+                </PrivateRoute>
+              }
+            />
 
-        <Route
-          path="/result"
-          element={
-            <PrivateRoute>
-              <Result />
-            </PrivateRoute>
-          }
-        />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
 
-        <Route
-          path="/history"
-          element={
-            <PrivateRoute>
-              <History />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+            <Route
+              path="/result"
+              element={
+                <PrivateRoute>
+                  <Result />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/history"
+              element={
+                <PrivateRoute>
+                  <History />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </div>
   );
 }
 

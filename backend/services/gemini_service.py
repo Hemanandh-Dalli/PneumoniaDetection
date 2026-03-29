@@ -83,20 +83,57 @@ def _local_explanation(predicted_class: str, confidence: float, max_lines: int) 
     pct = round(confidence * 100, 1)
     cls = (predicted_class or "").strip().lower()
 
-    if "bacterial" in cls:
-        summary = "The scan pattern may match bacterial pneumonia."
+    if "covid" in cls:
+        summary = (
+            "The model output is most consistent with Covid-19. For a beginner, this means "
+            "the X-ray may show an infection pattern that can fit COVID-related pneumonia."
+        )
+        teaching_point = (
+            "Look for bilateral or patchy lung opacities, especially in the peripheral and lower "
+            "lung zones, while remembering that X-ray findings can overlap with other infections."
+        )
+    elif "bacterial" in cls:
+        summary = (
+            "The radiographic pattern is more suggestive of bacterial pneumonia, "
+            "which commonly presents with denser focal or lobar air-space opacity."
+        )
+        teaching_point = (
+            "A beginner should look for a more localized dense white opacity, because bacterial "
+            "infection often affects a segment or lobe more clearly."
+        )
     elif "viral" in cls:
-        summary = "The scan pattern may match viral pneumonia."
+        summary = (
+            "The radiographic pattern is more suggestive of viral pneumonia, "
+            "which may appear with more diffuse or interstitial involvement."
+        )
+        teaching_point = (
+            "A beginner should look for a more widespread and less sharply localized pattern "
+            "compared with typical bacterial consolidation."
+        )
     elif "normal" in cls:
-        summary = "The scan does not show a strong pneumonia pattern."
+        summary = (
+            "The scan does not show a strong radiographic pattern of pneumonia "
+            "on this screening assessment."
+        )
+        teaching_point = (
+            "This means there is no obvious pneumonia pattern seen by the model, but symptoms "
+            "and early disease can still require clinical review."
+        )
     else:
-        summary = "The scan result suggests a possible chest finding."
+        summary = "The scan result suggests an abnormal chest finding that requires clinical correlation."
+        teaching_point = (
+            "Review the distribution of any opacity and compare it with the patient's symptoms "
+            "and examination findings."
+        )
 
     lines = [
         f"Model result: {predicted_class} ({pct}% confidence).",
         summary,
-        "This is a screening output, not a final diagnosis.",
-        "Please consult a qualified doctor for clinical confirmation.",
+        teaching_point,
+        "When analyzing the X-ray, note whether the opacities are focal or diffuse, unilateral or bilateral, and dense or hazy.",
+        "Then correlate the image with fever, cough, breathlessness, oxygen level, and inflammatory markers if available.",
+        "This remains an AI screening output and must not replace radiologist or physician interpretation.",
+        "Final diagnosis should be made with full clinical assessment and expert review.",
     ]
     return "\n".join(lines[:max_lines])
 
@@ -109,14 +146,19 @@ def _local_chat_fallback() -> str:
     )
 
 
-def explain_prediction(predicted_class: str, confidence: float, max_lines: int = 5) -> str:
+def explain_prediction(predicted_class: str, confidence: float, max_lines: int = 8) -> str:
     prompt = f"""
-You are a medical AI assistant.
+You are a senior doctor and pneumonia specialist teaching medical students.
 
-Explain the chest X-ray result in very simple language.
-Limit the explanation to {max_lines} short lines.
-Do not use medical jargon.
-Do not give treatment advice.
+Explain the chest X-ray result in a detailed but simple teaching manner for a beginner medical student.
+Base the explanation strictly on the predicted result label below.
+If the result is Covid-19, explain Covid-19 specifically and do not rewrite it as generic viral pneumonia.
+If the result is Pneumonia-Bacterial or Pneumonia-Viral, explain that exact type specifically.
+If the result is Normal, explain what a normal screening result means and what limitations still exist.
+Discuss what this result suggests, the important X-ray features a student should look for, and the main clinical correlation points.
+Use simple medical language that a beginner can understand.
+Do not prescribe treatment or give a final confirmed diagnosis.
+Limit the explanation to {max_lines} concise lines.
 
 Prediction: {predicted_class}
 Confidence: {confidence:.2f}

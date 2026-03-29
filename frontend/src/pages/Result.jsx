@@ -145,7 +145,7 @@ function Result() {
     <Layout>
       <Container maxWidth="md" sx={{ mt: { xs: 2, md: 4 } }}>
         <Card className="glass-3d" sx={{ backgroundColor: "transparent", color: "#eff7ff" }}>
-            <CardContent sx={{ p: { xs: 2.5, md: 4 } }}>
+          <CardContent sx={{ p: { xs: 2.5, md: 4 } }}>
             <Typography className="page-title" gutterBottom>
               Prediction Result
             </Typography>
@@ -174,7 +174,7 @@ function Result() {
             {heatmap_path && (
               <>
                 <Typography variant="subtitle1" sx={{ mt: 3, mb: 1 }}>
-                  AI Focus Areas (Grad-CAM)
+                  Effected Area
                 </Typography>
                 <img
                   src={`http://127.0.0.1:8000/${heatmap_path}`}
