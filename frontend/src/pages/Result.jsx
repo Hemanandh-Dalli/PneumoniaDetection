@@ -10,7 +10,7 @@ import {
   Box,
   Stack,
 } from "@mui/material";
-import API from "../api/api";
+import API, { buildAssetUrl } from "../api/api";
 import Layout from "../components/Layout";
 
 function Result() {
@@ -160,7 +160,7 @@ function Result() {
                   Original X-ray
                 </Typography>
                 <img
-                  src={`http://127.0.0.1:8000/${image_path}`}
+                  src={buildAssetUrl(image_path)}
                   alt="Uploaded X-ray"
                   style={{
                     width: "100%",
@@ -177,7 +177,7 @@ function Result() {
                   Effected Area
                 </Typography>
                 <img
-                  src={`http://127.0.0.1:8000/${heatmap_path}`}
+                  src={buildAssetUrl(heatmap_path)}
                   alt="Grad-CAM Heatmap"
                   style={{
                     width: "100%",

@@ -9,9 +9,8 @@ from keras.preprocessing import image
 from keras import Model
 from keras.layers import InputLayer, Conv2D, SeparableConv2D, DepthwiseConv2D
 from keras.mixed_precision import Policy
+from utils.config import MODEL_PATH
 
-
-MODEL_PATH = "model/pneumonia.keras"
 
 CLASS_LABELS = [
     "Covid-19",
@@ -62,7 +61,7 @@ def get_model():
         raise RuntimeError(model_load_error)
 
     try:
-        model = load_compatible_model(MODEL_PATH)
+        model = load_compatible_model(str(MODEL_PATH))
         return model
     except Exception as exc:
         model_load_error = (

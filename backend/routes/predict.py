@@ -17,11 +17,10 @@ from routes.auth import get_current_user
 
 from services.model_service import predict as model_predict
 from services.gemini_service import explain_prediction
+from utils.config import UPLOAD_DIR, to_public_path
 
 router = APIRouter()
-
-UPLOAD_DIR = "uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
 # ---------------------------------------------------
@@ -43,7 +42,7 @@ async def predict_image(
         step = "save_image"
         ext = os.path.splitext(file.filename)[1]
         filename = f"{uuid.uuid4()}{ext}"
-        file_path = os.path.join(UPLOAD_DIR, filename)
+        file_path = UPLOAD_DIR / filename
 
         with open(file_path, "wb") as buffer:
             buffer.write(await file.read())
@@ -72,7 +71,7 @@ async def predict_image(
         prediction = save_prediction(
             db=db,
             user_id=user_id,
-            image_path=file_path,
+            image_path=to_public_path(file_path.relative_to(UPLOAD_DIR.parent)),
             predicted_class=predicted_class,
             confidence=confidence,
             explanation=explanation,
@@ -107,8 +106,10 @@ async def predict_image(
             "predicted_class": predicted_class,
             "confidence": confidence,
             "explanation": explanation,
-            "image_path": file_path,
-            "heatmap_path": heatmap_path,
+            "image_path": to_public_path(file_path.relative_to(UPLOAD_DIR.parent)),
+            "heatmap_path": to_public_path(
+                heatmap_path.relative_to(UPLOAD_DIR.parent)
+            ),
         }
 
     except Exception as e:
@@ -141,7 +142,7 @@ def my_predictions(
             "predicted_class": p.predicted_class,
             "confidence": p.confidence,
             "created_at": p.created_at,
-            "image_path": p.image_path,
+            "image_path": to_public_path(p.image_path),
             "chat_id": p.chat.id if p.chat else None,
         }
         for p in predictions

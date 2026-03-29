@@ -8,6 +8,7 @@ from reportlab.lib.units import inch
 from reportlab.platypus import Table, TableStyle
 import io
 import os
+from utils.config import public_to_filesystem_path
 
 router = APIRouter()
 
@@ -52,17 +53,30 @@ def generate_report(data: ReportRequest):
     elements.append(Spacer(1, 20))
 
     # Add Original Image
-    if os.path.exists(data.image_path):
+    image_fs_path = None
+    heatmap_fs_path = None
+    try:
+        image_fs_path = public_to_filesystem_path(data.image_path)
+    except ValueError:
+        image_fs_path = None
+
+    if data.heatmap_path:
+        try:
+            heatmap_fs_path = public_to_filesystem_path(data.heatmap_path)
+        except ValueError:
+            heatmap_fs_path = None
+
+    if image_fs_path and os.path.exists(image_fs_path):
         elements.append(Paragraph("<b>Original X-ray:</b>", styles["Heading2"]))
         elements.append(Spacer(1, 10))
-        elements.append(Image(data.image_path, width=4*inch, height=4*inch))
+        elements.append(Image(str(image_fs_path), width=4*inch, height=4*inch))
         elements.append(Spacer(1, 20))
 
     # Add Heatmap
-    if os.path.exists(data.heatmap_path):
+    if heatmap_fs_path and os.path.exists(heatmap_fs_path):
         elements.append(Paragraph("<b>AI Focus Areas (Grad-CAM):</b>", styles["Heading2"]))
         elements.append(Spacer(1, 10))
-        elements.append(Image(data.heatmap_path, width=4*inch, height=4*inch))
+        elements.append(Image(str(heatmap_fs_path), width=4*inch, height=4*inch))
         elements.append(Spacer(1, 20))
 
     doc.build(elements)
