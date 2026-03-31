@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 import os
 import uuid
 import traceback
+from pathlib import Path
 
 from database.db import get_db
 from database.models import User, Prediction
@@ -53,6 +54,7 @@ async def predict_image(
         step = "model_predict"
         predicted_class, confidence, heatmap_path = model_predict(file_path)
         confidence = float(confidence)
+        heatmap_path = Path(heatmap_path)
 
         # -------------------------
         # GEMINI EXPLANATION

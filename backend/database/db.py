@@ -7,7 +7,7 @@ load_dotenv()
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+psycopg://postgres:postgres@localhost:5432/pneumonia_app",
+    "mysql+pymysql://root:mysql1215?@localhost:3306/pneumonia_app",
 )
 
 engine = create_engine(

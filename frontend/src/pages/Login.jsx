@@ -23,7 +23,7 @@ function Login() {
       localStorage.setItem("token", res.data.access_token);
       navigate("/");
     } catch (err) {
-      alert("Invalid credentials");
+      alert(err.response?.data?.detail || "Login failed");
     }
   };
 

@@ -22,7 +22,7 @@ function Upload() {
       const res = await API.post("/predict", formData);
       navigate("/result", { state: res.data });
     } catch (err) {
-      alert("Prediction failed");
+      alert(err.response?.data?.detail || "Prediction failed");
     }
   };
 

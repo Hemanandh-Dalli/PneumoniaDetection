@@ -2,6 +2,7 @@ import numpy as np
 import tensorflow as tf
 import cv2
 import os
+from pathlib import Path
 
 from keras.models import load_model
 from keras.applications.vgg16 import preprocess_input
@@ -75,7 +76,8 @@ def get_model():
 # -------------------------------------
 # 🔹 Preprocess Image (VGG16 style)
 # -------------------------------------
-def preprocess_image(image_path: str):
+def preprocess_image(image_path: str | Path):
+    image_path = str(image_path)
     img = image.load_img(image_path, target_size=(224, 224))
     img_array = image.img_to_array(img)
 
@@ -91,7 +93,8 @@ def preprocess_image(image_path: str):
 # -------------------------------------
 # 🔹 Prediction
 # -------------------------------------
-def predict(image_path):
+def predict(image_path: str | Path):
+    image_path = str(image_path)
     loaded_model = get_model()
     img_array = preprocess_image(image_path)
 
@@ -146,6 +149,7 @@ def generate_gradcam(
     class_index,
     last_conv_layer_name="block5_conv3"
 ):
+    image_path = str(image_path)
     last_conv_layer_name = _resolve_last_conv_layer_name(model, last_conv_layer_name)
 
     grad_model = Model(

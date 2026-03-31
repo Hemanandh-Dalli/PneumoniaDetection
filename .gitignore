@@ -13,6 +13,7 @@ backend/.env.*
 # python cache
 __pycache__/
 *.py[cod]
+backend/.venv/
 
 # generated/runtime files
 backend/uploads/
@@ -21,4 +22,5 @@ backend/reports/
 # frontend build
 frontend/dist/
 backend/model/*.keras
+!backend/model/pneumonia.keras
 lung.mp4
