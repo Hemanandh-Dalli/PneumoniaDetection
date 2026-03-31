@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000"
+  import.meta.env.VITE_API_BASE_URL || "/api"
 ).replace(/\/+$/, "");
 
 const API = axios.create({
@@ -18,6 +18,7 @@ API.interceptors.request.use((config) => {
 
 export const buildAssetUrl = (path) => {
   if (!path) return "";
+  if (/^https?:\/\//i.test(path)) return path;
   const normalizedPath = String(path).replace(/^\/+/, "").replace(/\\/g, "/");
   return `${API_BASE_URL}/${normalizedPath}`;
 };

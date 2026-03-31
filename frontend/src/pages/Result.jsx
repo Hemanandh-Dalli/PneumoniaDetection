@@ -151,7 +151,7 @@ function Result() {
             </Typography>
 
             <Typography className="page-subtitle" sx={{ mb: 2 }}>
-              AI diagnosis, Grad-CAM focus view, and follow-up assistant in one panel.
+              AI screening assessment, uploaded image review, and follow-up assistant in one panel.
             </Typography>
 
             {image_path && (
@@ -174,7 +174,7 @@ function Result() {
             {heatmap_path && (
               <>
                 <Typography variant="subtitle1" sx={{ mt: 3, mb: 1 }}>
-                  Effected Area
+                  AI Focus View
                 </Typography>
                 <img
                   src={buildAssetUrl(heatmap_path)}

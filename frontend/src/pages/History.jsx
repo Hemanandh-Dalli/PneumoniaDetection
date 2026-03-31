@@ -37,7 +37,7 @@ function History() {
             Prediction History
           </Typography>
           <Typography className="page-subtitle" sx={{ mb: 4 }}>
-            Browse all previous scans and reopen details.
+            Browse previous assessments and reopen details.
           </Typography>
 
           {predictions.length === 0 && (

@@ -36,7 +36,7 @@ function Upload() {
             </Typography>
 
             <Typography className="page-subtitle" sx={{ mb: 3 }}>
-              Add a chest X-ray image to generate prediction, heatmap, and explanation.
+              Add a chest X-ray image to generate an AI screening assessment and explanation.
             </Typography>
 
             <Box
@@ -66,7 +66,7 @@ function Upload() {
               }}
               onClick={handleUpload}
             >
-              Upload and Classify
+              Upload and Analyze
             </Button>
           </Paper>
         </Container>
