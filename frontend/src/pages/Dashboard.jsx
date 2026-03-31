@@ -38,7 +38,7 @@ function Dashboard() {
             Dashboard
           </Typography>
           <Typography className="page-subtitle" sx={{ mb: 3 }}>
-            Review your latest AI screening assessments.
+            Review your latest pneumonia screening outputs.
           </Typography>
 
           <Button
