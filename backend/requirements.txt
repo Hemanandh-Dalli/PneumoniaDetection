@@ -14,10 +14,10 @@ passlib[bcrypt]==1.7.4
 bcrypt==4.0.1
 
 # ===============================
-# Database (MySQL)
+# Database (Postgres / Supabase)
 # ===============================
 sqlalchemy==2.0.25
-pymysql==1.1.0
+psycopg[binary]==3.2.12
 
 # ===============================
 # Machine Learning & Image Processing

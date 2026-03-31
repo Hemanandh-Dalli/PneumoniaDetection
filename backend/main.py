@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from contextlib import asynccontextmanager
 
 from routes.auth import router as auth_router
 from routes.chat import router as chat_router
@@ -8,9 +9,17 @@ from routes.history import router as history_router
 from routes.predict import router as predict_router
 from routes.report import router as report_router
 from utils.config import UPLOAD_DIR, get_allowed_origins
+from database.db import Base, engine
+from database import models  # noqa: F401
 
 
-app = FastAPI(title="Pneumonia Detection API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
+
+
+app = FastAPI(title="Pneumonia Detection API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
